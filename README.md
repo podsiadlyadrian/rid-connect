@@ -1,4 +1,34 @@
-# React + TypeScript + Vite
+# RID Connect — panel B2B
+
+Aplikacja React + TypeScript + Vite (panel ocen ISO / środowisko / BHP dla firm).
+
+## Uruchomienie
+```bash
+npm install
+npm run dev     # serwer deweloperski
+npm run build   # tsc -b && vite build
+npm run lint    # oxlint
+```
+
+## Architektura danych
+Wszystkie dane przechodzą przez jedną warstwę: `src/data/DataProvider.tsx`
+(kontekst + hook `useData()`). Obecnie jest to implementacja **in-memory**
+(dane ulotne — odświeżenie resetuje stan). Komponenty nie trzymają już własnych
+kopii danych.
+
+### Podłączenie Supabase (następny krok)
+To są celowo przygotowane „podwaliny" — backend nie jest jeszcze podłączony:
+1. `npm i @supabase/supabase-js`
+2. skopiuj `.env.example` → `.env` i uzupełnij `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`
+   (osobny, niezależny projekt Supabase)
+3. odkomentuj klienta w `src/lib/supabase.ts`
+4. dodaj `SupabaseDataProvider` implementujący `DataApi` i podmień provider w `src/main.tsx`
+
+Realne logowanie/role oraz domena i hosting to kolejne, oddzielne kroki.
+
+---
+
+## React + TypeScript + Vite (szablon)
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
