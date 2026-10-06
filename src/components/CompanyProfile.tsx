@@ -100,6 +100,43 @@ export default function CompanyProfile({ company, setCompanies, announcements }:
             </div>
           </div>
         </div>
+
+        {/* Prawa kolumna: statystyki firmy + aktywne ogłoszenia */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div className="card">
+            <h3 className="card-title">Firma w liczbach</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark)' }}>{company.stats.employees}</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-light)' }}>Pracowników</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark)' }}>{company.stats.projects}</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-light)' }}>Projektów</div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark)' }}>{company.stats.years}</div>
+                <div style={{ fontSize: '11px', color: 'var(--text-light)' }}>Lat na rynku</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="card">
+            <h3 className="card-title">Twoje aktywne ogłoszenia ({myAds.length})</h3>
+            {myAds.length === 0 ? (
+              <p style={{ fontSize: '13px', color: 'var(--text-light)' }}>Nie masz jeszcze aktywnych ogłoszeń na Giełdzie Ofert.</p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {myAds.map(ad => (
+                  <div key={ad.id} style={{ paddingBottom: '12px', borderBottom: '1px solid var(--border-color)' }}>
+                    <h4 style={{ fontSize: '13px', color: 'var(--primary-dark)', fontWeight: 600 }}>{ad.title}</h4>
+                    <span style={{ fontSize: '11px', color: 'var(--text-light)' }}>{ad.categoryName}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

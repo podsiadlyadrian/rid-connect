@@ -150,6 +150,38 @@ export default function AdsBoard({ subscriptions, toggleSubscription, announceme
               <i className="fa-solid fa-magnifying-glass"></i>
               <input type="text" placeholder="Filtruj po słowach kluczowych..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {[
+                  { id: 'all', label: 'Wszystkie kategorie' },
+                  { id: 'collab', label: 'Współpraca B2B' },
+                  { id: 'env', label: 'Środowisko i BDO' },
+                  { id: 'bhp', label: 'BHP - Audyty' },
+                ].map(cat => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategoryFilter(cat.id)}
+                    className="btn"
+                    style={{ fontSize: '12px', padding: '6px 12px', boxShadow: 'none', background: activeCategoryFilter === cat.id ? 'var(--primary-dark)' : '#f1f5f9', color: activeCategoryFilter === cat.id ? 'white' : 'var(--text-main)' }}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '12px', color: 'var(--text-light)' }}>Sortuj:</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as 'newest' | 'oldest')}
+                  style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid var(--border-color)', background: 'white', fontSize: '12px' }}
+                >
+                  <option value="newest">Najnowsze</option>
+                  <option value="oldest">Najstarsze</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           <div className="grid-layout">
@@ -162,17 +194,37 @@ export default function AdsBoard({ subscriptions, toggleSubscription, announceme
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div className="card" style={{ borderLeft: '4px solid var(--accent-green)' }}>
                 <h3 className="card-title">Wybrane dla Ciebie</h3>
-                {subscribedAds.map(ad => (
-                  <div key={ad.id} className="ad-item" onClick={() => setSelectedAd(ad)} style={{ cursor: 'pointer' }}>
-                    <div className="ad-icon"><i className={`fa-solid ${ad.icon}`}></i></div>
-                    <div className="ad-content">
-                      <h4>{ad.title}</h4>
-                      <p>{ad.content.substring(0, 80)}...</p>
-                      <span className="ad-meta">{ad.companyName} • {ad.date}</span>
+                {subscribedAds.length === 0 ? (
+                  <p style={{ fontSize: '13px', color: 'var(--text-light)' }}>Brak ogłoszeń w obserwowanych kategoriach. Włącz alerty branżowe lub zmień filtry.</p>
+                ) : (
+                  subscribedAds.map(ad => (
+                    <div key={ad.id} className="ad-item" onClick={() => setSelectedAd(ad)} style={{ cursor: 'pointer' }}>
+                      <div className="ad-icon"><i className={`fa-solid ${ad.icon}`}></i></div>
+                      <div className="ad-content">
+                        <h4>{ad.title}</h4>
+                        <p>{ad.content.substring(0, 80)}...</p>
+                        <span className="ad-meta">{ad.companyName} • {ad.date}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
+
+              {otherAds.length > 0 && (
+                <div className="card">
+                  <h3 className="card-title">Pozostałe ogłoszenia</h3>
+                  {otherAds.map(ad => (
+                    <div key={ad.id} className="ad-item" onClick={() => setSelectedAd(ad)} style={{ cursor: 'pointer' }}>
+                      <div className="ad-icon"><i className={`fa-solid ${ad.icon}`}></i></div>
+                      <div className="ad-content">
+                        <h4>{ad.title}</h4>
+                        <p>{ad.content.substring(0, 80)}...</p>
+                        <span className="ad-meta">{ad.companyName} • {ad.date}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

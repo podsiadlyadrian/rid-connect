@@ -1,53 +1,21 @@
 import { useState } from 'react';
+import type { Company } from '../App';
 
-export default function AdminCompanies() {
-  const [companies, setCompanies] = useState([
-    { 
-      id: 1, 
-      name: "Eko-Druk S.A.", 
-      industry: "Poligrafia i Opakowania", 
-      isVerified: true, 
-      verificationExpiry: "2027-04-15",
-      ridRating: { 
-        current: { env: 92, quality: 85, bhp: 78, infosec: 45 },
-        history: [
-          { date: "2025-04-10", scores: { env: 88, quality: 85, bhp: 70, infosec: 40 } },
-          { date: "2024-04-05", scores: { env: 80, quality: 80, bhp: 65, infosec: 35 } }
-        ]
-      } 
-    },
-    { 
-      id: 2, 
-      name: "Bud-Pol Gdynia", 
-      industry: "Budownictwo", 
-      isVerified: true, 
-      verificationExpiry: "2026-07-20", // Zbliża się koniec!
-      ridRating: { 
-        current: { env: 65, quality: 72, bhp: 95, infosec: 30 },
-        history: [
-          { date: "2025-07-15", scores: { env: 60, quality: 75, bhp: 90, infosec: 30 } }
-        ]
-      } 
-    },
-    { 
-      id: 3, 
-      name: "Portowe Usługi IT", 
-      industry: "IT i Bezpieczeństwo", 
-      isVerified: false, 
-      verificationExpiry: "",
-      ridRating: { 
-        current: { env: 0, quality: 0, bhp: 0, infosec: 0 },
-        history: []
-      } 
-    }
-  ]);
+interface AdminCompaniesProps {
+  companies: Company[];
+  setCompanies: React.Dispatch<React.SetStateAction<Company[]>>;
+}
+
+export default function AdminCompanies({ companies, setCompanies }: AdminCompaniesProps) {
+  // Pracujemy bezpośrednio na globalnej bazie firm (props), dzięki czemu
+  // zapisane audyty są natychmiast widoczne w Katalogu i na profilach.
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingCompany, setEditingCompany] = useState<any>(null);
+  const [editingCompany, setEditingCompany] = useState<Company | null>(null);
   const [tempRating, setTempRating] = useState({ env: 0, quality: 0, bhp: 0, infosec: 0 });
   const [tempExpiry, setTempExpiry] = useState("");
 
-  const openEditModal = (company: any) => {
+  const openEditModal = (company: Company) => {
     setEditingCompany(company);
     setTempRating(company.ridRating.current);
     
