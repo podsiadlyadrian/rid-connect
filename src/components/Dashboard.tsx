@@ -68,15 +68,15 @@ export default function Dashboard({ company, announcements }: DashboardProps) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px dashed var(--border-color)' }}>
                 <span style={{ color: 'var(--text-light)' }}><i className="fa-solid fa-leaf mr-2"></i> Środowisko i BDO</span>
-                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.env}/100</strong>
+                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.current.env}/100</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px dashed var(--border-color)' }}>
                 <span style={{ color: 'var(--text-light)' }}><i className="fa-solid fa-medal mr-2"></i> Jakość (ISO 9001)</span>
-                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.quality}/100</strong>
+                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.current.quality}/100</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '6px', borderBottom: '1px dashed var(--border-color)' }}>
                 <span style={{ color: 'var(--text-light)' }}><i className="fa-solid fa-hard-hat mr-2"></i> BHP i Bezpieczeństwo</span>
-                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.bhp}/100</strong>
+                <strong style={{ color: 'var(--primary-dark)' }}>{company.ridRating.current.bhp}/100</strong>
               </div>
             </div>
           </div>
